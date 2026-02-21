@@ -4,16 +4,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-/* ─── Fade-up animation helper ─── */
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  }),
-};
-
 /* ─── Services data ─── */
 const services = [
   {
@@ -33,7 +23,6 @@ const services = [
   },
 ];
 
-/* ─── Nav links ─── */
 const navLinks = ["Services", "Work", "About"];
 
 export default function Home() {
@@ -46,23 +35,23 @@ export default function Home() {
   });
 
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
   return (
-    <main className="min-h-screen bg-[#0D0D1A] text-[#F7F7F5] font-[var(--font-bricolage)] overflow-x-hidden">
+    <main className="min-h-screen bg-[#0D0D1A] text-[#F7F7F5] overflow-x-hidden">
 
       {/* ── Navbar ── */}
       <nav
         className="fixed top-0 left-0 right-0 z-50 px-6 md:px-10"
         style={{
-          backdropFilter: "blur(24px) saturate(160%)",
-          WebkitBackdropFilter: "blur(24px) saturate(160%)",
-          backgroundColor: "rgba(13, 13, 26, 0.65)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          backdropFilter: "blur(48px) saturate(180%)",
+          WebkitBackdropFilter: "blur(48px) saturate(180%)",
+          backgroundColor: "rgba(10, 10, 20, 0.52)",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          boxShadow: "0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.25)",
         }}
       >
         <div className="max-w-6xl mx-auto h-16 flex items-center justify-between">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <span className="text-base font-[800] tracking-tight">KLARE</span>
             <div className="flex items-center gap-1">
@@ -74,7 +63,6 @@ export default function Home() {
             </span>
           </Link>
 
-          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
@@ -87,7 +75,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* CTA */}
           <Link
             href="#contact"
             className="hidden md:inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-[#4F8EF7]/10 border border-[#4F8EF7]/20 text-[#4F8EF7] hover:bg-[#4F8EF7] hover:text-white hover:border-[#4F8EF7] transition-all duration-300"
@@ -95,27 +82,19 @@ export default function Home() {
             Let&apos;s talk
           </Link>
 
-          {/* Mobile menu button */}
           <button
             className="md:hidden text-white/60 hover:text-white transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
             <div className="flex flex-col gap-1.5">
-              <span
-                className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
-              />
-              <span
-                className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}
-              />
-              <span
-                className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
-              />
+              <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
             </div>
           </button>
         </div>
 
-        {/* Mobile menu */}
         {menuOpen && (
           <div className="md:hidden py-4 border-t border-white/[0.06]">
             {navLinks.map((link) => (
@@ -144,85 +123,56 @@ export default function Home() {
         ref={heroRef}
         className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-16 overflow-hidden"
       >
-        {/* Background elements */}
+        {/* Background */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Dot grid */}
           <div
             className="absolute inset-0 opacity-[0.18]"
             style={{
-              backgroundImage:
-                "radial-gradient(circle, rgba(79,142,247,0.5) 1px, transparent 1px)",
+              backgroundImage: "radial-gradient(circle, rgba(79,142,247,0.5) 1px, transparent 1px)",
               backgroundSize: "40px 40px",
             }}
           />
-          {/* Radial fade overlay */}
           <div
             className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, #0D0D1A 70%)",
-            }}
+            style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, #0D0D1A 70%)" }}
           />
-          {/* Blue glow */}
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full opacity-[0.08]"
-            style={{
-              background:
-                "radial-gradient(ellipse, #4F8EF7 0%, transparent 70%)",
-              filter: "blur(60px)",
-            }}
+            style={{ background: "radial-gradient(ellipse, #4F8EF7 0%, transparent 70%)", filter: "blur(60px)" }}
           />
         </div>
 
-        {/* Hero content */}
+        {/* Hero content — parallax wrapper via framer-motion scroll transform */}
         <motion.div
           style={{ opacity: heroOpacity, y: heroY }}
           className="relative text-center max-w-5xl mx-auto"
         >
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.1}
-            className="inline-flex items-center gap-2.5 text-xs font-[400] tracking-[0.25em] text-[#4F8EF7] mb-8 uppercase"
+          <p
+            className="animate-fade-up [animation-delay:100ms] inline-flex items-center gap-2.5 text-xs font-[400] tracking-[0.25em] text-[#4F8EF7] mb-8 uppercase"
           >
             <span className="w-4 h-px bg-[#4F8EF7]" />
             Web Design Studio · Switzerland
             <span className="w-4 h-px bg-[#4F8EF7]" />
-          </motion.p>
+          </p>
 
-          <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.2}
-            className="text-5xl sm:text-7xl md:text-8xl font-[800] leading-[0.92] tracking-[-0.02em] mb-8"
+          <h1
+            className="animate-fade-up [animation-delay:200ms] text-5xl sm:text-7xl md:text-8xl font-[800] leading-[0.92] tracking-[-0.02em] mb-8"
           >
             Websites that
             <br />
             <span className="text-white/25">speak for</span>
             <br />
             themselves.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.35}
-            className="text-base md:text-lg text-white/45 font-[300] max-w-lg mx-auto mb-12 leading-relaxed"
+          <p
+            className="animate-fade-up [animation-delay:350ms] text-base md:text-lg text-white/45 font-[300] max-w-lg mx-auto mb-12 leading-relaxed"
           >
             We craft premium digital experiences for Swiss businesses —
             clear, modern, and built to convert.
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.5}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3"
-          >
+          <div className="animate-fade-up [animation-delay:500ms] flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href="#contact"
               className="px-8 py-4 rounded-full bg-[#4F8EF7] text-white font-[600] text-sm hover:bg-white hover:text-[#0D0D1A] transition-all duration-300 hover:scale-105"
@@ -235,47 +185,33 @@ export default function Home() {
             >
               See our work ↓
             </Link>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        <div
+          className="animate-fade-up [animation-delay:1800ms] absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <div className="w-px h-14 bg-gradient-to-b from-transparent via-white/20 to-transparent mx-auto" />
-        </motion.div>
+        </div>
       </section>
 
       {/* ── Services ── */}
       <section id="services" className="px-6 py-28 md:py-36">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="mb-16"
-          >
+          <div className="mb-16">
             <p className="text-xs tracking-[0.3em] text-[#4F8EF7] uppercase mb-4">
               What we do
             </p>
             <h2 className="text-4xl md:text-5xl font-[800] tracking-tight max-w-sm">
               Services
             </h2>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-3">
             {services.map((s, i) => (
-              <motion.div
+              <div
                 key={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                custom={i * 0.1}
                 className="group p-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-[#4F8EF7]/20 transition-all duration-500 cursor-default"
               >
                 <span className="text-xl text-[#4F8EF7] mb-6 block">
@@ -287,7 +223,7 @@ export default function Home() {
                 <p className="text-sm text-white/40 font-[300] leading-relaxed">
                   {s.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -296,20 +232,14 @@ export default function Home() {
       {/* ── How we work ── */}
       <section id="work" className="px-6 py-28 md:py-36 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mb-16"
-          >
+          <div className="mb-16">
             <p className="text-xs tracking-[0.3em] text-[#4F8EF7] uppercase mb-4">
               The process
             </p>
             <h2 className="text-4xl md:text-5xl font-[800] tracking-tight">
               How we work
             </h2>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-4 gap-8">
             {[
@@ -318,15 +248,7 @@ export default function Home() {
               { step: "03", title: "Build", desc: "We develop fast, modern websites with clean code." },
               { step: "04", title: "Launch", desc: "We deploy, optimise, and support your site post-launch." },
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                custom={i * 0.12}
-                className="relative"
-              >
+              <div key={i} className="relative">
                 <span className="text-xs font-[800] tracking-[0.2em] text-[#4F8EF7]/40 mb-4 block">
                   {item.step}
                 </span>
@@ -335,7 +257,7 @@ export default function Home() {
                 <p className="text-sm text-white/35 font-[300] leading-relaxed">
                   {item.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -344,24 +266,17 @@ export default function Home() {
       {/* ── CTA ── */}
       <section id="contact" className="px-6 py-28 md:py-36">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+          <div
             className="relative rounded-3xl border border-white/[0.06] overflow-hidden"
             style={{ backgroundColor: "rgba(255,255,255,0.02)" }}
           >
-            {/* Inner glow */}
             <div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none"
               style={{
-                background:
-                  "radial-gradient(ellipse, rgba(79,142,247,0.07) 0%, transparent 70%)",
+                background: "radial-gradient(ellipse, rgba(79,142,247,0.07) 0%, transparent 70%)",
                 filter: "blur(40px)",
               }}
             />
-            {/* Corner accents */}
             <div className="absolute top-0 left-0 w-16 h-16 border-l border-t border-[#4F8EF7]/20 rounded-tl-3xl" />
             <div className="absolute bottom-0 right-0 w-16 h-16 border-r border-b border-[#4F8EF7]/20 rounded-br-3xl" />
 
@@ -385,7 +300,7 @@ export default function Home() {
                 <span className="text-xs opacity-60">↗</span>
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
