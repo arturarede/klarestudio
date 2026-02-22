@@ -120,7 +120,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen text-[#1C1916] font-[var(--font-bricolage)] overflow-x-hidden">
+    <main className="min-h-screen text-[#1C1916] font-[var(--font-bricolage)]">
 
       {/* ── Navbar — floating pill ── */}
       <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
