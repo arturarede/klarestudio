@@ -67,8 +67,8 @@ export default function Home() {
           <div className="h-16 flex items-center justify-between px-8">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-4 h-4 rounded-full bg-[#D52B1E] flex items-center justify-center flex-shrink-0">
-                <svg width="7" height="7" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div className="w-3.5 h-3.5 rounded-full bg-[#D52B1E] flex items-center justify-center flex-shrink-0">
+                <svg width="6" height="6" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
                   <rect x="4" y="1" width="2" height="8" fill="white"/>
                   <rect x="1" y="4" width="8" height="2" fill="white"/>
                 </svg>
@@ -437,8 +437,8 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-[#D52B1E] flex items-center justify-center flex-shrink-0">
-              <svg width="7" height="7" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-3.5 h-3.5 rounded-full bg-[#D52B1E] flex items-center justify-center flex-shrink-0">
+              <svg width="6" height="6" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
                 <rect x="4" y="1" width="2" height="8" fill="white"/>
                 <rect x="1" y="4" width="8" height="2" fill="white"/>
               </svg>
