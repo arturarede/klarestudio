@@ -152,13 +152,33 @@ export function CookieBanner() {
                       role="switch"
                       aria-checked={analytics}
                       onClick={() => setAnalytics(!analytics)}
-                      className={`flex-shrink-0 mt-0.5 w-9 h-5 rounded-full transition-colors duration-200 relative ${
-                        analytics ? "bg-[#1C1916]" : "bg-[#1C1916]/15"
-                      }`}
+                      style={{
+                        flexShrink: 0,
+                        marginTop: "2px",
+                        width: "44px",
+                        height: "24px",
+                        borderRadius: "9999px",
+                        border: "none",
+                        padding: 0,
+                        cursor: "pointer",
+                        position: "relative",
+                        backgroundColor: analytics ? "#1C1916" : "rgba(28,25,22,0.15)",
+                        transition: "background-color 0.2s ease",
+                      }}
                     >
                       <span
-                        className="absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200"
-                        style={{ transform: analytics ? "translateX(18px)" : "translateX(2px)" }}
+                        style={{
+                          position: "absolute",
+                          top: "3px",
+                          left: "3px",
+                          width: "18px",
+                          height: "18px",
+                          borderRadius: "50%",
+                          backgroundColor: "white",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.18)",
+                          transition: "transform 0.2s ease",
+                          transform: analytics ? "translateX(20px)" : "translateX(0)",
+                        }}
                       />
                     </button>
                   </div>
