@@ -670,9 +670,23 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <p className="text-xs text-[#1C1916]/30 order-last md:order-none">
-            {t.copyright}
-          </p>
+          <div className="flex flex-col items-center gap-2 order-last md:order-none">
+            <p className="text-xs text-[#1C1916]/30">{t.copyright}</p>
+            <div className="flex items-center gap-4 text-[11px] text-[#1C1916]/35">
+              <Link href="/impressum" className="hover:text-[#1C1916] transition-colors">
+                Impressum
+              </Link>
+              <Link href="/datenschutz" className="hover:text-[#1C1916] transition-colors">
+                Datenschutz
+              </Link>
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent("openCookieSettings"))}
+                className="hover:text-[#1C1916] transition-colors cursor-pointer"
+              >
+                Cookies
+              </button>
+            </div>
+          </div>
           <div className="flex items-center gap-6 text-xs text-[#1C1916]/40">
             <Link href="#" className="hover:text-[#1C1916] transition-colors">
               Instagram
