@@ -125,15 +125,15 @@ export default function Home() {
       {/* ── Navbar — floating pill (expands on mobile) ── */}
       <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
         <nav
-          className="w-full max-w-5xl overflow-hidden"
+          className="w-full max-w-5xl"
           style={{
             backgroundColor: menuOpen ? "rgba(249, 246, 240, 0.97)" : "rgba(249, 246, 240, 0.18)",
             backdropFilter: "blur(16px) saturate(140%)",
             WebkitBackdropFilter: "blur(16px) saturate(140%)",
             border: "1px solid rgba(28, 25, 22, 0.07)",
-            borderRadius: menuOpen ? "20px" : "9999px",
+            borderRadius: "16px",
             boxShadow: "0 4px 32px rgba(28,25,22,0.06), 0 1px 4px rgba(28,25,22,0.03)",
-            transition: "background-color 0.25s ease, border-radius 0.25s ease",
+            transition: "background-color 0.2s ease",
           }}
         >
           {/* ── Top bar ── */}
