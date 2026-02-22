@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { CookieBanner } from "@/components/CookieBanner";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -23,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={bricolage.variable}>
       <body>
-        {children}
-        <CookieBanner />
+        <LanguageProvider>
+          {children}
+          <CookieBanner />
+        </LanguageProvider>
       </body>
     </html>
   );

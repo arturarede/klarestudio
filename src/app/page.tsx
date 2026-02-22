@@ -3,145 +3,8 @@
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
-
-/* ─── Language types ─── */
-type Language = "de" | "fr" | "it" | "en";
-
-/* ─── Translations ─── */
-const translations = {
-  de: {
-    tagline: "Web Design Studio · Schweiz",
-    heroTitle: ["Websites die", "für sich", "selbst sprechen."],
-    heroSub:
-      "Wir gestalten erstklassige digitale Erlebnisse für Schweizer Unternehmen — klar, modern und konversionsstark.",
-    cta1: "Projekt starten",
-    cta2: "Unsere Arbeit ↓",
-    navLinks: [
-      { label: "Leistungen", href: "services" },
-      { label: "Referenzen", href: "work" },
-      { label: "Über uns", href: "about" },
-    ],
-    talk: "Kontakt",
-    whatWeDo: "Was wir tun",
-    servicesTitle: "Leistungen",
-    services: [
-      { num: "01", title: "Web Design", desc: "Schöne, funktionale Designs, die Ihre Marke widerspiegeln und Besucher in Kunden verwandeln." },
-      { num: "02", title: "Entwicklung", desc: "Schnelle, barrierefreie Websites mit modernen Technologien. Performance ist nie optional." },
-      { num: "03", title: "Strategie", desc: "Wir helfen Ihnen, Ihre digitale Präsenz klar zu definieren — von der Struktur bis zum Inhalt." },
-    ],
-    theProcess: "Der Prozess",
-    howWeWork: "Wie wir arbeiten",
-    steps: [
-      { step: "01", title: "Analyse", desc: "Wir lernen Ihr Unternehmen, Ihre Ziele und Ihre Zielgruppe kennen." },
-      { step: "02", title: "Design", desc: "Wir entwickeln eine einzigartige visuelle Identität für Ihre Marke." },
-      { step: "03", title: "Entwicklung", desc: "Wir bauen schnelle, moderne Websites mit sauberem Code." },
-      { step: "04", title: "Launch", desc: "Wir deployen, optimieren und betreuen Ihre Website nach dem Launch." },
-    ],
-    readyToStart: "Bereit loszulegen?",
-    ctaTitle: ["Lass uns etwas", "Grossartiges schaffen."],
-    ctaSub: "Erzählen Sie uns von Ihrem Projekt und wir melden uns innerhalb von 24 Stunden.",
-    copyright: "© 2026 Klare Studio. Alle Rechte vorbehalten.",
-  },
-  fr: {
-    tagline: "Studio de Design Web · Suisse",
-    heroTitle: ["Des sites web qui", "parlent", "d'eux-mêmes."],
-    heroSub:
-      "Nous créons des expériences numériques premium pour les entreprises suisses — claires, modernes et conçues pour convertir.",
-    cta1: "Démarrer un projet",
-    cta2: "Voir notre travail ↓",
-    navLinks: [
-      { label: "Services", href: "services" },
-      { label: "Travaux", href: "work" },
-      { label: "À propos", href: "about" },
-    ],
-    talk: "Contact",
-    whatWeDo: "Ce que nous faisons",
-    servicesTitle: "Services",
-    services: [
-      { num: "01", title: "Web Design", desc: "Des designs beaux et fonctionnels qui reflètent votre marque et transforment les visiteurs en clients." },
-      { num: "02", title: "Développement", desc: "Des sites rapides et accessibles construits avec des technologies modernes. La performance n'est jamais optionnelle." },
-      { num: "03", title: "Stratégie", desc: "Nous vous aidons à définir votre présence digitale avec clarté — de la structure au contenu." },
-    ],
-    theProcess: "Le processus",
-    howWeWork: "Comment nous travaillons",
-    steps: [
-      { step: "01", title: "Découverte", desc: "Nous apprenons à connaître votre entreprise, vos objectifs et votre audience." },
-      { step: "02", title: "Design", desc: "Nous créons une identité visuelle unique adaptée à votre marque." },
-      { step: "03", title: "Développement", desc: "Nous développons des sites rapides et modernes avec un code propre." },
-      { step: "04", title: "Lancement", desc: "Nous déployons, optimisons et accompagnons votre site après le lancement." },
-    ],
-    readyToStart: "Prêt à commencer ?",
-    ctaTitle: ["Construisons", "quelque chose de grand."],
-    ctaSub: "Parlez-nous de votre projet et nous vous répondrons dans les 24 heures.",
-    copyright: "© 2026 Klare Studio. Tous droits réservés.",
-  },
-  it: {
-    tagline: "Studio di Web Design · Svizzera",
-    heroTitle: ["Siti web che", "parlano", "da soli."],
-    heroSub:
-      "Creiamo esperienze digitali premium per le aziende svizzere — chiare, moderne e progettate per convertire.",
-    cta1: "Avvia un progetto",
-    cta2: "Vedi il nostro lavoro ↓",
-    navLinks: [
-      { label: "Servizi", href: "services" },
-      { label: "Lavori", href: "work" },
-      { label: "Chi siamo", href: "about" },
-    ],
-    talk: "Contatto",
-    whatWeDo: "Cosa facciamo",
-    servicesTitle: "Servizi",
-    services: [
-      { num: "01", title: "Web Design", desc: "Design belli e funzionali che rispecchiano il tuo brand e trasformano i visitatori in clienti." },
-      { num: "02", title: "Sviluppo", desc: "Siti veloci e accessibili costruiti con tecnologie moderne. La performance non è mai opzionale." },
-      { num: "03", title: "Strategia", desc: "Ti aiutiamo a definire la tua presenza digitale con chiarezza — dalla struttura ai contenuti." },
-    ],
-    theProcess: "Il processo",
-    howWeWork: "Come lavoriamo",
-    steps: [
-      { step: "01", title: "Scoperta", desc: "Conosciamo la tua azienda, i tuoi obiettivi e il tuo pubblico." },
-      { step: "02", title: "Design", desc: "Creiamo un'identità visiva unica su misura per il tuo brand." },
-      { step: "03", title: "Sviluppo", desc: "Sviluppiamo siti veloci e moderni con codice pulito." },
-      { step: "04", title: "Lancio", desc: "Distribuiamo, ottimizziamo e supportiamo il tuo sito dopo il lancio." },
-    ],
-    readyToStart: "Pronti a iniziare?",
-    ctaTitle: ["Costruiamo", "qualcosa di grande."],
-    ctaSub: "Parlaci del tuo progetto e ti risponderemo entro 24 ore.",
-    copyright: "© 2026 Klare Studio. Tutti i diritti riservati.",
-  },
-  en: {
-    tagline: "Web Design Studio · Switzerland",
-    heroTitle: ["Websites that", "speak for", "themselves."],
-    heroSub:
-      "We craft premium digital experiences for Swiss businesses — clear, modern, and built to convert.",
-    cta1: "Start a project",
-    cta2: "See our work ↓",
-    navLinks: [
-      { label: "Services", href: "services" },
-      { label: "Work", href: "work" },
-      { label: "About", href: "about" },
-    ],
-    talk: "Let's talk",
-    whatWeDo: "What we do",
-    servicesTitle: "Services",
-    services: [
-      { num: "01", title: "Web Design", desc: "Beautiful, functional designs that reflect your brand and turn visitors into clients." },
-      { num: "02", title: "Development", desc: "Fast, accessible websites built with modern technologies. Performance is never optional." },
-      { num: "03", title: "Strategy", desc: "We help you define your digital presence with clarity — from structure to content." },
-    ],
-    theProcess: "The process",
-    howWeWork: "How we work",
-    steps: [
-      { step: "01", title: "Discovery", desc: "We learn about your business, goals, and audience." },
-      { step: "02", title: "Design", desc: "We craft a unique visual identity tailored to your brand." },
-      { step: "03", title: "Build", desc: "We develop fast, modern websites with clean code." },
-      { step: "04", title: "Launch", desc: "We deploy, optimise, and support your site post-launch." },
-    ],
-    readyToStart: "Ready to start?",
-    ctaTitle: ["Let's build", "something great."],
-    ctaSub: "Tell us about your project and we'll get back to you within 24 hours.",
-    copyright: "© 2026 Klare Studio. All rights reserved.",
-  },
-};
+import { translations, type Language } from "@/i18n/translations";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 /* ─── Fade-up animation helper ─── */
 const fadeUp = {
@@ -229,7 +92,7 @@ export default function Home() {
   const langDesktopRef = useRef<HTMLDivElement>(null);
   const langMobileRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [lang, setLang] = useState<Language>("de");
+  const { lang, setLang } = useLanguage();
   const [langOpen, setLangOpen] = useState(false);
 
   const t = translations[lang];
@@ -674,10 +537,10 @@ export default function Home() {
             <p className="text-xs text-[#1C1916]/30">{t.copyright}</p>
             <div className="flex items-center gap-4 text-[11px] text-[#1C1916]/35">
               <Link href="/impressum" className="hover:text-[#1C1916] transition-colors">
-                Impressum
+                {t.impressum.title}
               </Link>
               <Link href="/datenschutz" className="hover:text-[#1C1916] transition-colors">
-                Datenschutz
+                {t.footerPrivacy}
               </Link>
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent("openCookieSettings"))}
