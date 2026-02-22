@@ -265,8 +265,8 @@ export default function Home() {
           className="w-full max-w-5xl"
           style={{
             backgroundColor: "rgba(249, 246, 240, 0.18)",
-            backdropFilter: "blur(32px) saturate(200%)",
-            WebkitBackdropFilter: "blur(32px) saturate(200%)",
+            backdropFilter: "blur(12px) saturate(140%)",
+            WebkitBackdropFilter: "blur(12px) saturate(140%)",
             border: "1px solid rgba(28, 25, 22, 0.07)",
             borderRadius: "9999px",
             boxShadow: "0 4px 32px rgba(28,25,22,0.06), 0 1px 4px rgba(28,25,22,0.03)",
