@@ -264,7 +264,7 @@ export default function Home() {
         <nav
           className="w-full max-w-5xl"
           style={{
-            backgroundColor: "rgba(249, 246, 240, 0.48)",
+            backgroundColor: "rgba(249, 246, 240, 0.18)",
             backdropFilter: "blur(32px) saturate(200%)",
             WebkitBackdropFilter: "blur(32px) saturate(200%)",
             border: "1px solid rgba(28, 25, 22, 0.07)",
@@ -665,7 +665,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col leading-none">
               <span className="text-sm font-[800] tracking-tight text-[#1C1916] leading-tight">KLARE</span>
-              <span className="text-[8px] font-[300] tracking-[0.3em] text-[#1C1916]/30 uppercase leading-tight">
+              <span className="text-[9px] font-[300] tracking-[0.3em] text-[#1C1916]/30 uppercase leading-tight">
                 Studio
               </span>
             </div>
