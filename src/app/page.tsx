@@ -178,7 +178,7 @@ export default function Home() {
               />
               <Link
                 href="#contact"
-                className="inline-flex items-center gap-2 text-sm font-[500] px-6 py-2.5 rounded-full border border-[#1C1916]/15 text-[#1C1916]/70 hover:bg-[#1C1916] hover:text-[#F9F6F0] hover:border-[#1C1916] transition-all duration-300 whitespace-nowrap"
+                className="inline-flex items-center gap-2 text-sm font-[600] px-6 py-2.5 rounded-full bg-[#1C1916] text-[#F9F6F0] hover:bg-[#B89B6A] transition-colors duration-300 whitespace-nowrap"
               >
                 {t.talk}
               </Link>
