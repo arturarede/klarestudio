@@ -42,16 +42,17 @@ export default function Home() {
 
       {/* ── Navbar ── */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 px-6 md:px-10"
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-32px)] max-w-5xl ${menuOpen ? "rounded-t-2xl" : "rounded-2xl"} transition-[border-radius] duration-200`}
         style={{
-          backdropFilter: "blur(48px) saturate(180%)",
-          WebkitBackdropFilter: "blur(48px) saturate(180%)",
-          backgroundColor: "rgba(10, 10, 20, 0.52)",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
-          boxShadow: "0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.25)",
+          backdropFilter: "blur(40px) saturate(200%)",
+          WebkitBackdropFilter: "blur(40px) saturate(200%)",
+          backgroundColor: "rgba(255, 255, 255, 0.06)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          boxShadow:
+            "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.1)",
         }}
       >
-        <div className="max-w-6xl mx-auto h-16 flex items-center justify-between">
+        <div className="h-14 px-5 md:px-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
             <span className="text-base font-[800] tracking-tight">KLARE</span>
             <div className="flex items-center gap-1">
@@ -77,7 +78,7 @@ export default function Home() {
 
           <Link
             href="#contact"
-            className="hidden md:inline-flex items-center gap-2 text-sm px-5 py-2.5 rounded-full bg-[#4F8EF7]/10 border border-[#4F8EF7]/20 text-[#4F8EF7] hover:bg-[#4F8EF7] hover:text-white hover:border-[#4F8EF7] transition-all duration-300"
+            className="hidden md:inline-flex items-center gap-2 text-sm px-5 py-2 rounded-full bg-[#4F8EF7]/15 border border-[#4F8EF7]/25 text-[#4F8EF7] hover:bg-[#4F8EF7] hover:text-white hover:border-[#4F8EF7] transition-all duration-300"
           >
             Let&apos;s talk
           </Link>
@@ -96,7 +97,9 @@ export default function Home() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden py-4 border-t border-white/[0.06]">
+          <div
+            className="md:hidden px-5 pb-5 rounded-b-2xl border-t border-white/[0.08]"
+          >
             {navLinks.map((link) => (
               <Link
                 key={link}
@@ -109,7 +112,7 @@ export default function Home() {
             ))}
             <Link
               href="#contact"
-              className="inline-block mt-3 text-sm px-5 py-2.5 rounded-full bg-[#4F8EF7] text-white"
+              className="inline-block mt-2 text-sm px-5 py-2.5 rounded-full bg-[#4F8EF7] text-white"
               onClick={() => setMenuOpen(false)}
             >
               Let&apos;s talk
@@ -121,23 +124,52 @@ export default function Home() {
       {/* ── Hero ── */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-16 overflow-hidden"
+        className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 overflow-hidden"
       >
         {/* Background */}
         <div className="absolute inset-0 pointer-events-none">
+          {/* Dot grid */}
           <div
-            className="absolute inset-0 opacity-[0.18]"
+            className="absolute inset-0 opacity-[0.15]"
             style={{
               backgroundImage: "radial-gradient(circle, rgba(79,142,247,0.5) 1px, transparent 1px)",
               backgroundSize: "40px 40px",
             }}
           />
+          {/* Aurora top-left — purple/violet */}
+          <div
+            className="absolute -top-10 -left-10 w-[700px] h-[420px] rounded-full opacity-[0.45]"
+            style={{
+              background: "radial-gradient(ellipse, #7C3AED 0%, #4F46E5 40%, transparent 70%)",
+              filter: "blur(70px)",
+            }}
+          />
+          {/* Aurora top-right — cyan/teal */}
+          <div
+            className="absolute -top-10 -right-10 w-[600px] h-[380px] rounded-full opacity-[0.35]"
+            style={{
+              background: "radial-gradient(ellipse, #06B6D4 0%, #0EA5E9 40%, transparent 70%)",
+              filter: "blur(70px)",
+            }}
+          />
+          {/* Aurora centre — blue */}
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[280px] rounded-full opacity-[0.3]"
+            style={{
+              background: "radial-gradient(ellipse, #4F8EF7 0%, transparent 65%)",
+              filter: "blur(50px)",
+            }}
+          />
+          {/* Radial fade overlay */}
           <div
             className="absolute inset-0"
-            style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, #0D0D1A 70%)" }}
+            style={{
+              background: "radial-gradient(ellipse 80% 65% at 50% 50%, transparent 0%, #0D0D1A 75%)",
+            }}
           />
+          {/* Main blue glow centre */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full opacity-[0.08]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full opacity-[0.07]"
             style={{ background: "radial-gradient(ellipse, #4F8EF7 0%, transparent 70%)", filter: "blur(60px)" }}
           />
         </div>
