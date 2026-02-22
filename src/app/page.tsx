@@ -122,20 +122,22 @@ export default function Home() {
   return (
     <main className="min-h-screen text-[#1C1916] font-[var(--font-bricolage)]">
 
-      {/* ── Navbar — floating pill ── */}
+      {/* ── Navbar — floating pill (expands on mobile) ── */}
       <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
         <nav
-          className="w-full max-w-5xl"
+          className="w-full max-w-5xl overflow-hidden"
           style={{
-            backgroundColor: "rgba(249, 246, 240, 0.18)",
-            backdropFilter: "blur(12px) saturate(140%)",
-            WebkitBackdropFilter: "blur(12px) saturate(140%)",
+            backgroundColor: menuOpen ? "rgba(249, 246, 240, 0.97)" : "rgba(249, 246, 240, 0.18)",
+            backdropFilter: "blur(16px) saturate(140%)",
+            WebkitBackdropFilter: "blur(16px) saturate(140%)",
             border: "1px solid rgba(28, 25, 22, 0.07)",
-            borderRadius: "9999px",
+            borderRadius: menuOpen ? "20px" : "9999px",
             boxShadow: "0 4px 32px rgba(28,25,22,0.06), 0 1px 4px rgba(28,25,22,0.03)",
+            transition: "background-color 0.25s ease, border-radius 0.25s ease",
           }}
         >
-          <div className="h-16 flex items-center justify-between px-8">
+          {/* ── Top bar ── */}
+          <div className="h-16 flex items-center justify-between px-6">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-3.5 h-3.5 rounded-full bg-[#D52B1E] flex items-center justify-center flex-shrink-0">
@@ -152,7 +154,7 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* Desktop nav links */}
+            {/* Desktop: nav links */}
             <div className="hidden md:flex items-center gap-8">
               {t.navLinks.map((link) => (
                 <Link
@@ -165,7 +167,7 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Desktop right: lang switcher + CTA */}
+            {/* Desktop: lang + CTA */}
             <div className="hidden md:flex items-center gap-3">
               <LangDropdown
                 lang={lang}
@@ -182,8 +184,15 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Mobile right: lang switcher + hamburger */}
+            {/* Mobile: Let's talk + lang + hamburger */}
             <div className="md:hidden flex items-center gap-2">
+              <Link
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                className="text-[11px] font-[700] px-3.5 py-1.5 rounded-full bg-[#1C1916] text-[#F9F6F0] whitespace-nowrap tracking-wide"
+              >
+                {t.talk}
+              </Link>
               <LangDropdown
                 lang={lang}
                 langOpen={langOpen}
@@ -192,7 +201,7 @@ export default function Home() {
                 dropRef={langMobileRef}
               />
               <button
-                className="text-[#1C1916]/50 hover:text-[#1C1916] transition-colors p-1"
+                className="text-[#1C1916]/55 hover:text-[#1C1916] transition-colors p-1"
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle menu"
               >
@@ -204,40 +213,37 @@ export default function Home() {
               </button>
             </div>
           </div>
+
+          {/* ── Mobile menu — expands inside the pill ── */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: "auto" }}
+                exit={{ height: 0 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+                className="overflow-hidden md:hidden"
+              >
+                <div
+                  className="px-6 pb-5 pt-1 flex flex-col"
+                  style={{ borderTop: "1px solid rgba(28,25,22,0.07)" }}
+                >
+                  {t.navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={`#${link.href}`}
+                      className="py-3.5 text-sm font-[400] text-[#1C1916]/55 hover:text-[#1C1916] transition-colors border-b border-[#1C1916]/[0.06] last:border-0"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
       </div>
-
-      {/* Mobile menu dropdown */}
-      {menuOpen && (
-        <div
-          className="fixed top-[4.5rem] left-4 right-4 z-40 rounded-2xl p-5"
-          style={{
-            backgroundColor: "rgba(249, 246, 240, 0.96)",
-            backdropFilter: "blur(24px)",
-            WebkitBackdropFilter: "blur(24px)",
-            border: "1px solid rgba(28, 25, 22, 0.09)",
-            boxShadow: "0 8px 32px rgba(28,25,22,0.12)",
-          }}
-        >
-          {t.navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={`#${link.href}`}
-              className="block py-3 text-base text-[#1C1916]/60 hover:text-[#1C1916] transition-colors border-b border-[#1C1916]/06 last:border-0"
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <Link
-            href="#contact"
-            className="inline-block mt-4 text-sm font-[600] px-6 py-3 rounded-full bg-[#1C1916] text-[#F9F6F0]"
-            onClick={() => setMenuOpen(false)}
-          >
-            {t.talk}
-          </Link>
-        </div>
-      )}
 
       {/* ── Hero — lightest cream ── */}
       <section
