@@ -277,8 +277,8 @@ export default function Home() {
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-3.5 h-3.5 rounded-full bg-[#D52B1E] flex items-center justify-center flex-shrink-0">
                 <svg width="6" height="6" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-                  <rect x="4" y="1" width="2" height="8" fill="white"/>
-                  <rect x="1" y="4" width="8" height="2" fill="white"/>
+                  <rect x="3.5" y="1" width="3" height="8" fill="white"/>
+                  <rect x="1" y="3.5" width="8" height="3" fill="white"/>
                 </svg>
               </div>
               <div className="flex flex-col leading-none">
@@ -659,13 +659,13 @@ export default function Home() {
           <div className="flex items-center gap-2">
             <div className="w-3.5 h-3.5 rounded-full bg-[#D52B1E] flex items-center justify-center flex-shrink-0">
               <svg width="6" height="6" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-                <rect x="4" y="1" width="2" height="8" fill="white"/>
-                <rect x="1" y="4" width="8" height="2" fill="white"/>
+                <rect x="3.5" y="1" width="3" height="8" fill="white"/>
+                <rect x="1" y="3.5" width="8" height="3" fill="white"/>
               </svg>
             </div>
             <div className="flex flex-col leading-none">
               <span className="text-sm font-[800] tracking-tight text-[#1C1916] leading-tight">KLARE</span>
-              <span className="text-[10px] font-[300] tracking-[0.3em] text-[#1C1916]/30 uppercase leading-tight">
+              <span className="text-[8px] font-[300] tracking-[0.3em] text-[#1C1916]/30 uppercase leading-tight">
                 Studio
               </span>
             </div>
