@@ -1,8 +1,147 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+
+/* ─── Language types ─── */
+type Language = "de" | "fr" | "it" | "en";
+
+/* ─── Translations ─── */
+const translations = {
+  de: {
+    tagline: "Web Design Studio · Schweiz",
+    heroTitle: ["Websites die", "für sich", "selbst sprechen."],
+    heroSub:
+      "Wir gestalten erstklassige digitale Erlebnisse für Schweizer Unternehmen — klar, modern und konversionsstark.",
+    cta1: "Projekt starten",
+    cta2: "Unsere Arbeit ↓",
+    navLinks: [
+      { label: "Leistungen", href: "services" },
+      { label: "Referenzen", href: "work" },
+      { label: "Über uns", href: "about" },
+    ],
+    talk: "Kontakt",
+    whatWeDo: "Was wir tun",
+    servicesTitle: "Leistungen",
+    services: [
+      { num: "01", title: "Web Design", desc: "Schöne, funktionale Designs, die Ihre Marke widerspiegeln und Besucher in Kunden verwandeln." },
+      { num: "02", title: "Entwicklung", desc: "Schnelle, barrierefreie Websites mit modernen Technologien. Performance ist nie optional." },
+      { num: "03", title: "Strategie", desc: "Wir helfen Ihnen, Ihre digitale Präsenz klar zu definieren — von der Struktur bis zum Inhalt." },
+    ],
+    theProcess: "Der Prozess",
+    howWeWork: "Wie wir arbeiten",
+    steps: [
+      { step: "01", title: "Analyse", desc: "Wir lernen Ihr Unternehmen, Ihre Ziele und Ihre Zielgruppe kennen." },
+      { step: "02", title: "Design", desc: "Wir entwickeln eine einzigartige visuelle Identität für Ihre Marke." },
+      { step: "03", title: "Entwicklung", desc: "Wir bauen schnelle, moderne Websites mit sauberem Code." },
+      { step: "04", title: "Launch", desc: "Wir deployen, optimieren und betreuen Ihre Website nach dem Launch." },
+    ],
+    readyToStart: "Bereit loszulegen?",
+    ctaTitle: ["Lass uns etwas", "Grossartiges schaffen."],
+    ctaSub: "Erzählen Sie uns von Ihrem Projekt und wir melden uns innerhalb von 24 Stunden.",
+    copyright: "© 2026 Klare Studio. Alle Rechte vorbehalten.",
+  },
+  fr: {
+    tagline: "Studio de Design Web · Suisse",
+    heroTitle: ["Des sites web qui", "parlent", "d'eux-mêmes."],
+    heroSub:
+      "Nous créons des expériences numériques premium pour les entreprises suisses — claires, modernes et conçues pour convertir.",
+    cta1: "Démarrer un projet",
+    cta2: "Voir notre travail ↓",
+    navLinks: [
+      { label: "Services", href: "services" },
+      { label: "Travaux", href: "work" },
+      { label: "À propos", href: "about" },
+    ],
+    talk: "Contact",
+    whatWeDo: "Ce que nous faisons",
+    servicesTitle: "Services",
+    services: [
+      { num: "01", title: "Web Design", desc: "Des designs beaux et fonctionnels qui reflètent votre marque et transforment les visiteurs en clients." },
+      { num: "02", title: "Développement", desc: "Des sites rapides et accessibles construits avec des technologies modernes. La performance n'est jamais optionnelle." },
+      { num: "03", title: "Stratégie", desc: "Nous vous aidons à définir votre présence digitale avec clarté — de la structure au contenu." },
+    ],
+    theProcess: "Le processus",
+    howWeWork: "Comment nous travaillons",
+    steps: [
+      { step: "01", title: "Découverte", desc: "Nous apprenons à connaître votre entreprise, vos objectifs et votre audience." },
+      { step: "02", title: "Design", desc: "Nous créons une identité visuelle unique adaptée à votre marque." },
+      { step: "03", title: "Développement", desc: "Nous développons des sites rapides et modernes avec un code propre." },
+      { step: "04", title: "Lancement", desc: "Nous déployons, optimisons et accompagnons votre site après le lancement." },
+    ],
+    readyToStart: "Prêt à commencer ?",
+    ctaTitle: ["Construisons", "quelque chose de grand."],
+    ctaSub: "Parlez-nous de votre projet et nous vous répondrons dans les 24 heures.",
+    copyright: "© 2026 Klare Studio. Tous droits réservés.",
+  },
+  it: {
+    tagline: "Studio di Web Design · Svizzera",
+    heroTitle: ["Siti web che", "parlano", "da soli."],
+    heroSub:
+      "Creiamo esperienze digitali premium per le aziende svizzere — chiare, moderne e progettate per convertire.",
+    cta1: "Avvia un progetto",
+    cta2: "Vedi il nostro lavoro ↓",
+    navLinks: [
+      { label: "Servizi", href: "services" },
+      { label: "Lavori", href: "work" },
+      { label: "Chi siamo", href: "about" },
+    ],
+    talk: "Contatto",
+    whatWeDo: "Cosa facciamo",
+    servicesTitle: "Servizi",
+    services: [
+      { num: "01", title: "Web Design", desc: "Design belli e funzionali che rispecchiano il tuo brand e trasformano i visitatori in clienti." },
+      { num: "02", title: "Sviluppo", desc: "Siti veloci e accessibili costruiti con tecnologie moderne. La performance non è mai opzionale." },
+      { num: "03", title: "Strategia", desc: "Ti aiutiamo a definire la tua presenza digitale con chiarezza — dalla struttura ai contenuti." },
+    ],
+    theProcess: "Il processo",
+    howWeWork: "Come lavoriamo",
+    steps: [
+      { step: "01", title: "Scoperta", desc: "Conosciamo la tua azienda, i tuoi obiettivi e il tuo pubblico." },
+      { step: "02", title: "Design", desc: "Creiamo un'identità visiva unica su misura per il tuo brand." },
+      { step: "03", title: "Sviluppo", desc: "Sviluppiamo siti veloci e moderni con codice pulito." },
+      { step: "04", title: "Lancio", desc: "Distribuiamo, ottimizziamo e supportiamo il tuo sito dopo il lancio." },
+    ],
+    readyToStart: "Pronti a iniziare?",
+    ctaTitle: ["Costruiamo", "qualcosa di grande."],
+    ctaSub: "Parlaci del tuo progetto e ti risponderemo entro 24 ore.",
+    copyright: "© 2026 Klare Studio. Tutti i diritti riservati.",
+  },
+  en: {
+    tagline: "Web Design Studio · Switzerland",
+    heroTitle: ["Websites that", "speak for", "themselves."],
+    heroSub:
+      "We craft premium digital experiences for Swiss businesses — clear, modern, and built to convert.",
+    cta1: "Start a project",
+    cta2: "See our work ↓",
+    navLinks: [
+      { label: "Services", href: "services" },
+      { label: "Work", href: "work" },
+      { label: "About", href: "about" },
+    ],
+    talk: "Let's talk",
+    whatWeDo: "What we do",
+    servicesTitle: "Services",
+    services: [
+      { num: "01", title: "Web Design", desc: "Beautiful, functional designs that reflect your brand and turn visitors into clients." },
+      { num: "02", title: "Development", desc: "Fast, accessible websites built with modern technologies. Performance is never optional." },
+      { num: "03", title: "Strategy", desc: "We help you define your digital presence with clarity — from structure to content." },
+    ],
+    theProcess: "The process",
+    howWeWork: "How we work",
+    steps: [
+      { step: "01", title: "Discovery", desc: "We learn about your business, goals, and audience." },
+      { step: "02", title: "Design", desc: "We craft a unique visual identity tailored to your brand." },
+      { step: "03", title: "Build", desc: "We develop fast, modern websites with clean code." },
+      { step: "04", title: "Launch", desc: "We deploy, optimise, and support your site post-launch." },
+    ],
+    readyToStart: "Ready to start?",
+    ctaTitle: ["Let's build", "something great."],
+    ctaSub: "Tell us about your project and we'll get back to you within 24 hours.",
+    copyright: "© 2026 Klare Studio. All rights reserved.",
+  },
+};
 
 /* ─── Fade-up animation helper ─── */
 const fadeUp = {
@@ -14,31 +153,86 @@ const fadeUp = {
   }),
 };
 
-/* ─── Services data ─── */
-const services = [
-  {
-    num: "01",
-    title: "Web Design",
-    desc: "Beautiful, functional designs that reflect your brand and turn visitors into clients.",
-  },
-  {
-    num: "02",
-    title: "Development",
-    desc: "Fast, accessible websites built with modern technologies. Performance is never optional.",
-  },
-  {
-    num: "03",
-    title: "Strategy",
-    desc: "We help you define your digital presence with clarity — from structure to content.",
-  },
-];
+const LANGUAGES: Language[] = ["de", "fr", "it", "en"];
 
-/* ─── Nav links ─── */
-const navLinks = ["Services", "Work", "About"];
+/* ─── Language Dropdown ─── */
+function LangDropdown({
+  lang,
+  langOpen,
+  setLang,
+  setLangOpen,
+  dropRef,
+}: {
+  lang: Language;
+  langOpen: boolean;
+  setLang: (l: Language) => void;
+  setLangOpen: (v: boolean) => void;
+  dropRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  return (
+    <div ref={dropRef} className="relative">
+      <button
+        onClick={() => setLangOpen(!langOpen)}
+        className="flex items-center gap-1 text-[#1C1916]/45 hover:text-[#1C1916] transition-colors duration-200 px-2 py-1"
+        aria-label="Select language"
+      >
+        <span className="text-xs font-[500] tracking-widest">{lang.toUpperCase()}</span>
+        <svg
+          width="8"
+          height="5"
+          viewBox="0 0 8 5"
+          fill="none"
+          style={{ display: "block" }}
+          className={`transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`}
+        >
+          <path d="M1 1L4 4L7 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      <AnimatePresence>
+        {langOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -4, scale: 0.97 }}
+            transition={{ duration: 0.15 }}
+            className="absolute right-0 top-full mt-2 rounded-xl overflow-hidden z-50"
+            style={{
+              backgroundColor: "rgba(249, 246, 240, 0.98)",
+              border: "1px solid rgba(28,25,22,0.08)",
+              boxShadow: "0 8px 24px rgba(28,25,22,0.10)",
+              minWidth: "68px",
+            }}
+          >
+            {LANGUAGES.map((l) => (
+              <button
+                key={l}
+                onClick={() => { setLang(l); setLangOpen(false); }}
+                className={`block w-full text-left px-4 py-2.5 text-xs font-[500] tracking-widest transition-colors duration-150 ${
+                  l === lang
+                    ? "text-[#1C1916] bg-[#1C1916]/[0.05]"
+                    : "text-[#1C1916]/40 hover:text-[#1C1916] hover:bg-[#1C1916]/[0.03]"
+                }`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
+  const langDesktopRef = useRef<HTMLDivElement>(null);
+  const langMobileRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [lang, setLang] = useState<Language>("de");
+  const [langOpen, setLangOpen] = useState(false);
+
+  const t = translations[lang];
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -47,6 +241,20 @@ export default function Home() {
 
   const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+
+  // Close language dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const target = e.target as Node;
+      const insideDesktop = langDesktopRef.current?.contains(target) ?? false;
+      const insideMobile = langMobileRef.current?.contains(target) ?? false;
+      if (!insideDesktop && !insideMobile) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   return (
     <main className="min-h-screen text-[#1C1916] font-[var(--font-bricolage)] overflow-x-hidden">
@@ -83,37 +291,55 @@ export default function Home() {
 
             {/* Desktop nav links */}
             <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
+              {t.navLinks.map((link) => (
                 <Link
-                  key={link}
-                  href={`#${link.toLowerCase()}`}
+                  key={link.href}
+                  href={`#${link.href}`}
                   className="text-sm text-[#1C1916]/45 hover:text-[#1C1916] transition-colors duration-200"
                 >
-                  {link}
+                  {link.label}
                 </Link>
               ))}
             </div>
 
-            {/* Desktop CTA */}
-            <Link
-              href="#contact"
-              className="hidden md:inline-flex items-center gap-2 text-sm font-[500] px-6 py-2.5 rounded-full border border-[#1C1916]/15 text-[#1C1916]/70 hover:bg-[#1C1916] hover:text-[#F9F6F0] hover:border-[#1C1916] transition-all duration-300 whitespace-nowrap"
-            >
-              Let&apos;s talk
-            </Link>
+            {/* Desktop right: lang switcher + CTA */}
+            <div className="hidden md:flex items-center gap-3">
+              <LangDropdown
+                lang={lang}
+                langOpen={langOpen}
+                setLang={setLang}
+                setLangOpen={setLangOpen}
+                dropRef={langDesktopRef}
+              />
+              <Link
+                href="#contact"
+                className="inline-flex items-center gap-2 text-sm font-[500] px-6 py-2.5 rounded-full border border-[#1C1916]/15 text-[#1C1916]/70 hover:bg-[#1C1916] hover:text-[#F9F6F0] hover:border-[#1C1916] transition-all duration-300 whitespace-nowrap"
+              >
+                {t.talk}
+              </Link>
+            </div>
 
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden text-[#1C1916]/50 hover:text-[#1C1916] transition-colors p-1"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              <div className="flex flex-col gap-1.5">
-                <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-                <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-                <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-              </div>
-            </button>
+            {/* Mobile right: lang switcher + hamburger */}
+            <div className="md:hidden flex items-center gap-2">
+              <LangDropdown
+                lang={lang}
+                langOpen={langOpen}
+                setLang={setLang}
+                setLangOpen={setLangOpen}
+                dropRef={langMobileRef}
+              />
+              <button
+                className="text-[#1C1916]/50 hover:text-[#1C1916] transition-colors p-1"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle menu"
+              >
+                <div className="flex flex-col gap-1.5">
+                  <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+                  <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+                  <span className={`block w-5 h-px bg-current transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+                </div>
+              </button>
+            </div>
           </div>
         </nav>
       </div>
@@ -130,14 +356,14 @@ export default function Home() {
             boxShadow: "0 8px 32px rgba(28,25,22,0.12)",
           }}
         >
-          {navLinks.map((link) => (
+          {t.navLinks.map((link) => (
             <Link
-              key={link}
-              href={`#${link.toLowerCase()}`}
+              key={link.href}
+              href={`#${link.href}`}
               className="block py-3 text-base text-[#1C1916]/60 hover:text-[#1C1916] transition-colors border-b border-[#1C1916]/06 last:border-0"
               onClick={() => setMenuOpen(false)}
             >
-              {link}
+              {link.label}
             </Link>
           ))}
           <Link
@@ -145,7 +371,7 @@ export default function Home() {
             className="inline-block mt-4 text-sm font-[600] px-6 py-3 rounded-full bg-[#1C1916] text-[#F9F6F0]"
             onClick={() => setMenuOpen(false)}
           >
-            Let&apos;s talk
+            {t.talk}
           </Link>
         </div>
       )}
@@ -191,7 +417,7 @@ export default function Home() {
             className="inline-flex items-center gap-2.5 text-xs font-[400] tracking-[0.25em] text-[#B89B6A] mb-8 uppercase"
           >
             <span className="w-4 h-px bg-[#B89B6A]" />
-            Web Design Studio · Switzerland
+            {t.tagline}
             <span className="w-4 h-px bg-[#B89B6A]" />
           </motion.p>
 
@@ -202,11 +428,11 @@ export default function Home() {
             custom={0.2}
             className="text-5xl sm:text-7xl md:text-8xl font-[800] leading-[0.92] tracking-[-0.02em] mb-8 text-[#1C1916]"
           >
-            Websites that
+            {t.heroTitle[0]}
             <br />
-            <span className="text-[#1C1916]/18">speak for</span>
+            <span className="text-[#1C1916]/18">{t.heroTitle[1]}</span>
             <br />
-            themselves.
+            {t.heroTitle[2]}
           </motion.h1>
 
           <motion.p
@@ -216,8 +442,7 @@ export default function Home() {
             custom={0.35}
             className="text-base md:text-lg text-[#1C1916]/45 font-[300] max-w-lg mx-auto mb-12 leading-relaxed"
           >
-            We craft premium digital experiences for Swiss businesses —
-            clear, modern, and built to convert.
+            {t.heroSub}
           </motion.p>
 
           <motion.div
@@ -231,13 +456,13 @@ export default function Home() {
               href="#contact"
               className="px-9 py-4 rounded-full bg-[#1C1916] text-[#F9F6F0] font-[600] text-sm tracking-wide hover:bg-[#B89B6A] transition-all duration-300 hover:scale-[1.02] whitespace-nowrap"
             >
-              Start a project
+              {t.cta1}
             </Link>
             <Link
               href="#services"
               className="px-9 py-4 rounded-full border border-[#1C1916]/14 text-[#1C1916]/55 text-sm hover:text-[#1C1916] hover:border-[#1C1916]/28 transition-all duration-300 whitespace-nowrap"
             >
-              See our work ↓
+              {t.cta2}
             </Link>
           </motion.div>
         </motion.div>
@@ -268,15 +493,15 @@ export default function Home() {
             className="mb-20"
           >
             <p className="text-xs tracking-[0.3em] text-[#B89B6A] uppercase mb-5">
-              What we do
+              {t.whatWeDo}
             </p>
             <h2 className="text-4xl md:text-5xl font-[800] tracking-tight max-w-sm text-[#1C1916]">
-              Services
+              {t.servicesTitle}
             </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-5">
-            {services.map((s, i) => (
+            {t.services.map((s, i) => (
               <motion.div
                 key={i}
                 variants={fadeUp}
@@ -326,20 +551,15 @@ export default function Home() {
             className="mb-20"
           >
             <p className="text-xs tracking-[0.3em] text-[#A07D45] uppercase mb-5">
-              The process
+              {t.theProcess}
             </p>
             <h2 className="text-4xl md:text-5xl font-[800] tracking-tight text-[#1C1916]">
-              How we work
+              {t.howWeWork}
             </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-4 gap-10">
-            {[
-              { step: "01", title: "Discovery", desc: "We learn about your business, goals, and audience." },
-              { step: "02", title: "Design", desc: "We craft a unique visual identity tailored to your brand." },
-              { step: "03", title: "Build", desc: "We develop fast, modern websites with clean code." },
-              { step: "04", title: "Launch", desc: "We deploy, optimise, and support your site post-launch." },
-            ].map((item, i) => (
+            {t.steps.map((item, i) => (
               <motion.div
                 key={i}
                 variants={fadeUp}
@@ -393,15 +613,15 @@ export default function Home() {
 
             <div className="relative text-center px-8 py-20 md:py-28">
               <p className="text-xs tracking-[0.3em] text-[#B89B6A] uppercase mb-8">
-                Ready to start?
+                {t.readyToStart}
               </p>
               <h2 className="text-4xl md:text-6xl font-[800] tracking-tight mb-8 text-[#F9F6F0]">
-                Let&apos;s build
+                {t.ctaTitle[0]}
                 <br />
-                something great.
+                {t.ctaTitle[1]}
               </h2>
               <p className="text-[#F9F6F0]/38 font-[300] mb-14 max-w-md mx-auto text-base leading-loose">
-                Tell us about your project and we&apos;ll get back to you within 24 hours.
+                {t.ctaSub}
               </p>
               <Link
                 href="mailto:hello@klarestudio.ch"
@@ -451,7 +671,7 @@ export default function Home() {
             </div>
           </div>
           <p className="text-xs text-[#1C1916]/30 order-last md:order-none">
-            © 2026 Klare Studio. All rights reserved.
+            {t.copyright}
           </p>
           <div className="flex items-center gap-6 text-xs text-[#1C1916]/40">
             <Link href="#" className="hover:text-[#1C1916] transition-colors">
