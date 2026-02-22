@@ -66,15 +66,14 @@ export default function Home() {
         >
           <div className="h-16 flex items-center justify-between px-8">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <span className="text-base font-[800] tracking-tight text-[#1C1916]">KLARE</span>
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#B89B6A] group-hover:scale-125 transition-transform" />
-                <div className="w-px h-3 bg-[#1C1916]/10" />
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className="text-lg leading-none">🇨🇭</span>
+              <div className="flex flex-col leading-none">
+                <span className="text-base font-[800] tracking-tight text-[#1C1916] leading-tight">KLARE</span>
+                <span className="text-[10px] font-[300] tracking-[0.3em] text-[#1C1916]/40 uppercase leading-tight">
+                  Studio
+                </span>
               </div>
-              <span className="text-xs font-[300] tracking-[0.35em] text-[#1C1916]/40 uppercase">
-                Studio
-              </span>
             </Link>
 
             {/* Desktop nav links */}
@@ -433,11 +432,13 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-[800] tracking-tight text-[#1C1916]">KLARE</span>
-            <div className="w-1.5 h-1.5 rounded-full bg-[#B89B6A]" />
-            <span className="text-xs font-[300] tracking-[0.35em] text-[#1C1916]/30 uppercase">
-              Studio
-            </span>
+            <span className="text-base leading-none">🇨🇭</span>
+            <div className="flex flex-col leading-none">
+              <span className="text-sm font-[800] tracking-tight text-[#1C1916] leading-tight">KLARE</span>
+              <span className="text-[10px] font-[300] tracking-[0.3em] text-[#1C1916]/30 uppercase leading-tight">
+                Studio
+              </span>
+            </div>
           </div>
           <p className="text-xs text-[#1C1916]/30 order-last md:order-none">
             © 2026 Klare Studio. All rights reserved.
